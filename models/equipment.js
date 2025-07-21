@@ -1,10 +1,7 @@
 const mongoose = require('mongoose');
 
 // Connect to MongoDB
-mongoose.connect('mongodb://127.0.0.1:27017/login', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+mongoose.connect(MONGO_URI)
   .then(() => console.log('✅ MongoDB usereq connected'))
   .catch(err => console.error('❌ MongoDB usereq connection error:', err));
 
