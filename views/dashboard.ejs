@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Farm Equipment Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * { box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+      }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: url(https://wallpapercat.com/w/full/1/5/2/1327309-3840x2160-desktop-4k-village-wallpaper.jpg);
+      background-repeat: no-repeat;         
+      background-size: cover;                
+      background-position: center;            
+      height: 100vh;                         
+      margin: 0;
+      color: #333;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #c3d5ee;
+      margin-bottom: 40px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      flex: 1 1 200px;
+      background: linear-gradient(to right, #66bb6a, #43a047);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      text-align: center;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      background: linear-gradient(to right, #43a047, #388e3c);
+    }
+
+    .section {
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    form label {
+      font-weight: bold;
+      margin-top: 15px;
+      display: block;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    button[type="submit"] {
+      background-color: #2e7d32;
+      color: white;
+      padding: 12px 24px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      width: 100%;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #1b5e20;
+    }
+
+    .equipment-list {
+      margin-top: 20px;
+    }
+
+    .card {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .card img {
+      width: 150px;
+      height: auto;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .card-content h3 {
+      margin: 0;
+      color: #2e7d32;
+    }
+
+    .card-content p {
+      margin: 5px 0;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+
+      .btn {
+        font-size: 14px;
+        padding: 10px;
+      }
+
+      input, textarea, button[type="submit"] {
+        font-size: 14px;
+      }
+
+      .card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .card img {
+        width: 100%;
+        max-width: 300px;
+      }
+
+      .card-content {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 22px;
+      }
+
+      .btn {
+        font-size: 13px;
+        padding: 10px;
+      }
+
+      .card-content h3 {
+        font-size: 18px;
+      }
+
+      .card-content p {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1 >🌾 Farm Equipment Rental Dashboard</h1>
+
+  <div class="container">
+    <div class="btn-group">
+      <button class="btn" onclick="showSection('addForm')">➕ Add Equipment</button>
+      <button class="btn" onclick="showSection('showEquipments')">📋 Show Equipments</button>
+    </div>
+
+    <!-- Add Equipment Section -->
+    <div id="addForm" class="section">
+      <h2>Add New Equipment</h2>
+      <form action="/dashboard" method="post"  onsubmit="addEquipment(event)">
+        <label>Equipment Name</label>
+        <input type="text" name="equipmentname" id="eqName" required>
+
+        <label>Description</label>
+        <textarea id="eqDesc" name="discription" required></textarea>
+
+        <label>Price per Day (₹)</label>
+        <input type="number" name="price" id="eqPrice" required>
+
+        <label>Image URL</label>
+        <input type="text" name="imageurl" id="eqImage" placeholder="https://example.com/tractor.jpg">
+
+        <button type="submit">Add Equipment</button>
+      </form>
+    </div>
+
+    <!-- Equipment List Section -->
+    <div id="showEquipments" class="section">
+      <h2>Available Equipments</h2>
+      <div class="equipment-list" id="equipmentList">
+        <p>No equipment added yet.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const equipmentList = [];
+
+    function showSection(id) {
+      document.getElementById("addForm").style.display = "none";
+      document.getElementById("showEquipments").style.display = "none";
+      document.getElementById(id).style.display = "block";
+    }
+
+    showSection('showEquipments');
+
+    function addEquipment(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("eqName").value;
+      const description = document.getElementById("eqDesc").value;
+      const price = document.getElementById("eqPrice").value;
+      const image = document.getElementById("eqImage").value || "https://via.placeholder.com/150";
+
+      const equipment = { name, description, price, image };
+      equipmentList.push(equipment);
+
+      // Clear inputs
+      document.getElementById("eqName").value = "";
+      document.getElementById("eqDesc").value = "";
+      document.getElementById("eqPrice").value = "";
+      document.getElementById("eqImage").value = "";
+
+      updateEquipmentList();
+      showSection("showEquipments");
+    }
+
+    function updateEquipmentList() {
+      const listContainer = document.getElementById("equipmentList");
+      listContainer.innerHTML = "";
+
+      if (equipmentList.length === 0) {
+        listContainer.innerHTML = "<p>No equipment available.</p>";
+      } else {
+        equipmentList.forEach(eq => {
+          const card = `
+            <div class="card">
+              <img src="${eq.image}" alt="${eq.name}">
+              <div class="card-content">
+                <h3>${eq.name}</h3>
+                <p><strong>Description:</strong> ${eq.description}</p>
+                <p><strong>Price:</strong> ₹${eq.price} / day</p>
+              </div>
+            </div>
+          `;
+          listContainer.innerHTML += card;
+        });
+      }
+    }
+  </script>
+
+</body>
+</html>
