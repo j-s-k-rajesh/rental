@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const mongoURI = process.env.mongouri;
 
 // Connect to MongoDB
-mongoose.connect("mongodb+srv://jamisivakrishnarajesh:<zhxmE3k45k5ukmlw>@cluster.kenz2hu.mongodb.net/?retryWrites=true&w=majority&appName=cluster")
+mongoose.connect("mongodb+srv://jamisivakrishnarajesh:zhxmE3k45k5ukmlw@cluster.kenz2hu.mongodb.net/?retryWrites=true&w=majority&appName=cluster")
   .then(() => console.log('✅ MongoDB connected'))
   .catch(err => console.error('❌ MongoDB connection error:', err));
 
