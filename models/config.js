@@ -15,7 +15,7 @@ const signupSchema = new mongoose.Schema({
 });
 
 // Create the model
-const User = mongoose.model('users', signupSchema); // Use singular model name
+const User = mongoose.model('user', signupSchema); // Use singular model name
 
 // Export the model
 module.exports = User;
